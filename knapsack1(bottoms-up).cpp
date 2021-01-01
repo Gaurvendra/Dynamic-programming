@@ -30,38 +30,85 @@ typedef vector<pl>		vpl;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-
+   long long arr[101][100005]; // DP matrix
 
 const int mod = 1'000'000'007;
 const int N = 3e5, M = N;
 
+
 void i_am_horny()
 {
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 }
 
-void solve();
 
 
-int main() {
+
+void solve()
+{
+
+    long long n, W ;
+    cin >> n >> W; ; // number of items
+    long long val[n], wt[n]; // values and wts array
+    for (long long i = 0; i < n; i++)
+        cin >> wt[i] >> val[i];
+
  
+
+
+    for (long long i = 0; i <= n; i++)
+    {
+        for (long long j = 0; j <= W; j++)
+        {
+            if(i == 0 || j == 0)
+            {
+                arr[i][j] = 0;
+            }
+        }
+    }
+    for (long long i = 1; i <= n; i++)
+    {
+        for (long long j = 1; j <= W; j++)
+        {
+            if(wt[i - 1] <= j)
+            {
+                arr[i][j] = max(val[i - 1] + arr[i - 1][j - wt[i - 1]], arr[i - 1][j]);
+            }
+            else
+            {
+                arr[i][j] = arr[i - 1][j];
+            }
+
+        }
+    }
+
+
+    cout << arr[n][W] << endl;
+
+
+
+}
+
+
+
+int main()
+{
+
     i_am_horny();
 
     int t = 1;
-    cin >> t;
-    while(t--) {
-      solve();
+    //cin >> t;
+    while(t--)
+    {
+        solve();
     }
 
     return 0;
-}
-void solve() {
-  int i, j, n, m;
-  cout<<"suijnghchvjvgbfgbgfbgfjhhg";
-  
 }
