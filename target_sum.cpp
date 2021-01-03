@@ -48,19 +48,29 @@ void i_am_horny()
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 }
 
-int subset( long long val[], long long sum, long long N)
+void print(int row, int col){
+    for(int i = 0; i<row; i++){
+        for(int j = 0; j<col; j++){
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+long long subset( long long val[], long long sum, long long N)
 {
-    // base case
-    if(sum == 0)
+
+     if(sum == 0 )
     {
+       arr[N][sum] = 1;
         return 1;
     }
-
+    // base case
     if(N == 0)
     {
+        arr[N][sum] = 0;
         return 0;
     }
-
+   
 
 
     if(arr[N][sum] != -1)
@@ -69,12 +79,11 @@ int subset( long long val[], long long sum, long long N)
     }
     else
     {
-        int res;
+        long long res;
         if(val[N - 1] <= sum)
         {
 
-
-            res = subset(val, sum - val[N - 1], N - 1) || subset( val, sum, N - 1);
+            res = subset(val, sum - val[N - 1], N - 1) + subset( val, sum, N - 1);
             arr[N][sum] = res;
 
 
@@ -94,13 +103,12 @@ int subset( long long val[], long long sum, long long N)
 void solve()
 {
 
-    long long n, sum=0 ;
-    cin >> n  ; // number of items
+    long long n, diff ,sum =0;
+    cin >> n >> diff; ; // number of items
     long long val[n]; // values and wts array
-    for (long long i = 0; i < n; i++)
-    {
+    for (long long i = 0; i < n; i++){
         cin >> val[i];
-        sum += val[i];
+        sum+= val[i];
     }
 
     // matrix initialization
@@ -108,24 +116,15 @@ void solve()
         for (long long j = 0; j <= sum; j++)
             arr[i][j] = -1 ;
 
-    long long mini = INT_MAX;
-    for (long long i = 0; i <= (sum / 2); ++i)
-    {
-        long long ans;
+    long long ans,x;
+    x=(sum -diff)/2;
 
-        ans = subset( val, i, n);
+    ans = subset( val, x, n);
 
-
-        if(ans)
-        {
-            mini = min(mini, abs(2*i - sum ));
-        }
-
-
-    }
-    cout << mini;
-
+   cout<<ans<<endl;
+   //print(n+1,sum+1);
 }
+
 
 int main()
 {
